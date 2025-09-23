@@ -9,8 +9,10 @@ class InterActiveDismisableLists extends StatefulWidget {
 
 class _InterActiveDismisableListsState extends State<InterActiveDismisableLists> {
   List<String> _tasks = ['Buy groceries', 'Walk the dog', 'Read a book'];
+  List<bool> _checked = [false, false, false];
   String? _recentlyDeletedTask;
   int? _recentlyDeletedTaskIndex;
+  bool? _recentlyDeletedChecked;
 
   Future<bool> _showConfirmDialog(BuildContext context, String task) async {
     return await showDialog<bool>(
