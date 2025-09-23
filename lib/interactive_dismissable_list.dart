@@ -92,6 +92,14 @@ class _InterActiveDismisableListsState extends State<InterActiveDismisableLists>
                 index: index,
                 child: const Icon(Icons.drag_handle),
               ),
+              trailing: Checkbox(
+                value: checked,
+                onChanged: (value) {
+                  setState(() {
+                    _checked[index] = value ?? false;
+                  });
+                },
+              ),
             ),
           );
         },
