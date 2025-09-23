@@ -88,7 +88,10 @@ class _InterActiveDismisableListsState extends State<InterActiveDismisableLists>
             child: ListTile(
               key: ValueKey('tile_$task'),
               title: Text(task),
-              leading: const Icon(Icons.drag_handle),
+              leading:  ReorderableDragStartListener(
+                index: index,
+                child: const Icon(Icons.drag_handle),
+              ),
             ),
           );
         },
