@@ -86,9 +86,16 @@ class _InterActiveDismisableListsState extends State<InterActiveDismisableLists>
               child: const Icon(Icons.delete, color: Colors.white),
             ),
             child: ListTile(
-              key: ValueKey('tile_$task'),
-              title: Text(task),
-              leading:  ReorderableDragStartListener(
+              title: Text(
+                task,
+                style: checked
+                    ? const TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.grey,
+                      )
+                    : null,
+              ),
+              leading: ReorderableDragStartListener(
                 index: index,
                 child: const Icon(Icons.drag_handle),
               ),
