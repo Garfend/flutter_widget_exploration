@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:math';
+import 'package:flutter/material.dart';
 
 class InteractivePhysicsWidget extends StatefulWidget {
   const InteractivePhysicsWidget({super.key});
