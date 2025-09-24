@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_exploration/interactive_dismissable_list.dart';
 import 'package:flutter_widget_exploration/interactive_physics_widget.dart';
+import 'package:flutter_widget_exploration/loading_animation.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -34,6 +36,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
   final List<Widget> _screens = const [
     InteractivePhysicsWidget(),
     InterActiveDismisableLists(),
+    LoadingDotsAnimation(),
   ];
 
   @override
@@ -47,9 +50,10 @@ class _HomeNavBarState extends State<HomeNavBar> {
             icon: Icon(Icons.sports_baseball),
             label: 'Physics',
           ),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Tasks'),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Tasks',
+            icon: Icon(Icons.restart_alt),
+            label: 'Loading',
           ),
         ],
         onTap: (index) {
