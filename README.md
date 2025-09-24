@@ -1,81 +1,159 @@
-markdown
-# flutter_widget_exploration
+### flutter_widget_exploration
 
-A Flutter application demonstrating interactive and animated widgets for task management and UI exploration.
++
 
-## Overview
++A Flutter application demonstrating interactive and animated UI patterns: a drag & drop color match
+game, a swipe-to-manage task list, and a loading dots animation.
 
-This app showcases three Flutter widgets, each with a practical example and visual demonstration. Explore how these widgets can enhance user experience in your own projects.
++
 
----
++---
 
-## 1. Interactive Dismissible List
++
 
-Manage tasks with swipe-to-delete functionality using the [Dismissible](https://docs.flutter.dev/ui/widgets/catalog#dismissible) widget. Users can remove items with a swipe gesture and undo deletions.
++### Overview
 
-![Interactive Dismissible List](assets/interactive_dismissable_list.gif)
++
 
----
++This app includes three focused examples. Each section explains the goal, the building blocks used,
+and the core logic, with a GIF preview and a link to the source file.
 
-## 2. Interactive Physics-Based List
++
 
-Experience smooth, physics-driven reordering of list items using the [ReorderableListView](https://docs.flutter.dev/ui/widgets/catalog#reorderablelistview) widget. Drag and drop to rearrange tasks intuitively.
++---
 
-![Interactive Physics List](assets/interactive_phyics_list.gif)
++
 
----
++### 1) Drag & Drop Color Match ("Balls" game)
 
-## 3. Loading Animation
++
 
-Display engaging loading states with the [AnimatedBuilder](https://docs.flutter.dev/ui/widgets/catalog#animatedbuilder) widget. Enhance feedback during asynchronous operations.
++Match colored balls to their corresponding containers using drag and drop.
 
-![Loading Animation](assets/loading_animation.gif)
++
 
----
++![Drag & Drop Color Match](assets/gif/interactive_phyics_list.gif)
 
-## Resources
++
 
-- [Flutter Widget Catalog](https://docs.flutter.dev/ui/widgets/catalog)
-- [Flutter Documentation](https://docs.flutter.dev/)
++- **Source**: `lib/interactive_physics_widget.dart`
++- **Key widgets & APIs**: `Draggable`, `DragTarget`, `AnimatedContainer`, `Random`, `setState`
++- **How it works**:
 
----markdown
-# flutter_widget_exploration
++
+    - The available colors are defined once; on each round `randomizeGame()` shuffles both the balls
+      and the container order using `Random()` and resets a `matched` map.
++
+    - Each ball is a `Draggable<Color>`; while dragging, a semi-transparent `feedback` is shown and
+      the original is dimmed via `childWhenDragging`.
++
+    - Each container is a `DragTarget<Color>` that reacts to hover with an `AnimatedContainer` (
+      border and background hints). `onWillAccept` prevents dropping into an already matched slot.
++
+    - In `onAccept`, we compare the dropped `Color` with the container’s expected color; on a match,
+      we mark `matched[color] = true` and hide the ball; otherwise we show a hint message.
++
+    - When all entries in `matched` are true, a completion banner and a restart button appear to
+      re-shuffle the game state.
++
 
-A Flutter application demonstrating interactive and animated widgets for task management and UI exploration.
++---
 
-## Overview
++
 
-This app showcases three Flutter widgets, each with a practical example and visual demonstration. Explore how these widgets can enhance user experience in your own projects.
++### 2) Interactive Task List (Dismiss + Reorder)
 
----
++
 
-## 1. Interactive Dismissible List
++Manage tasks with swipe-to-delete, undo, checkboxes, and drag-to-reorder.
 
-Manage tasks with swipe-to-delete functionality using the [Dismissible](https://docs.flutter.dev/ui/widgets/catalog#dismissible) widget. Users can remove items with a swipe gesture and undo deletions.
++
 
-![Interactive Dismissible List](assets/interactive_dismissable_list.gif)
++![Interactive Task List](assets/gif/interactive_dismissable_list.gif)
 
----
++
 
-## 2. Interactive Physics-Based List
++- **Source**: `lib/interactive_dismissable_list.dart`
++- **Key widgets & APIs**: `Dismissible`, `SnackBar` (with undo), `AlertDialog` (confirm),
+`ReorderableListView.builder`, `ReorderableDragStartListener`, `Checkbox`
++- **How it works**:
 
-Experience smooth, physics-driven reordering of list items using the [ReorderableListView](https://docs.flutter.dev/ui/widgets/catalog#reorderablelistview) widget. Drag and drop to rearrange tasks intuitively.
++
+    - Tasks and completion state are stored in parallel lists: `_tasks` and `_checked`.
++
+    - Each row is wrapped in `Dismissible` with `DismissDirection.endToStart`. Before deletion,
+      `confirmDismiss` opens an `AlertDialog` to confirm.
++
+    - On delete, we keep a copy of the removed task/index to enable an undo via `SnackBarAction`;
+      pressing Undo reinserts the task and its previous checked state.
++
+    - The list supports drag-and-drop reordering using `ReorderableListView.builder`; `onReorder`
+      updates both `_tasks` and `_checked` in sync. The drag handle is provided by
+      `ReorderableDragStartListener`.
++
+    - Toggling `Checkbox` updates `_checked[index]`. Completed tasks render with a line-through
+      style.
++
 
-![Interactive Physics List](assets/interactive_phyics_list.gif)
++---
 
----
++
 
-## 3. Loading Animation
++### 3) Loading Dots Animation (Staggered)
 
-Display engaging loading states with the [AnimatedBuilder](https://docs.flutter.dev/ui/widgets/catalog#animatedbuilder) widget. Enhance feedback during asynchronous operations.
++
 
-![Loading Animation](assets/loading_animation.gif)
++Three dots animate in a loop with staggered scale and fade.
 
----
++
 
-## Resources
++![Loading Animation](assets/gif/loading_animation.gif)
 
-- [Flutter Widget Catalog](https://docs.flutter.dev/ui/widgets/catalog)
-- [Flutter Documentation](https://docs.flutter.dev/)
++
 
----
++- **Source**: `lib/loading_animation.dart`
++- **Key widgets & APIs**: `AnimationController`, `AnimatedBuilder`, `CurvedAnimation`, `Interval`,
+`Transform.scale`, `Opacity`, `SingleTickerProviderStateMixin`
++- **How it works**:
+
++
+    - A single `AnimationController` repeats every 1200ms. For each dot, we derive two tweens (scale
+      and opacity) driven by a `CurvedAnimation` with an `Interval` offset by `index * 0.2` to
+      create a staggered effect.
++
+    - Inside `AnimatedBuilder`, a `Row` generates three circular `Container` dots that read the
+      current values and rebuild smoothly without managing multiple controllers.
++
+    - The widget disposes the controller in `dispose()` to avoid leaks.
++
+
++---
+
++
+
++### Navigation
+
++
+
++Use the bottom navigation bar to switch between the three screens.
+
++
+
++- **Source**: `lib/main.dart`
++- Tabs: Physics (color match), Tasks (dismiss + reorder), Loading (dots animation)
+
++
+
++---
+
++
+
++### Resources
+
++
+
++- **Flutter Widget Catalog**: https://docs.flutter.dev/ui/widgets/catalog
++- **Draggable / DragTarget**: https://api.flutter.dev/flutter/widgets/Draggable-class.html
++- **Dismissible**: https://api.flutter.dev/flutter/widgets/Dismissible-class.html
++- **ReorderableListView**: https://api.flutter.dev/flutter/material/ReorderableListView-class.html
++- **AnimatedBuilder**: https://api.flutter.dev/flutter/widgets/AnimatedBuilder-class.html
