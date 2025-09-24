@@ -2,9 +2,9 @@
 
 A Flutter application demonstrating interactive and animated UI patterns:
 
-- 🎨 Drag & drop color match game  
-- ✅ Swipe-to-manage task list  
-- ⏳ Loading dots animation  
+- Drag & drop color match game  
+- Swipe-to-manage task list  
+- Loading dots animation  
 
 ---
 
@@ -14,7 +14,7 @@ Each section explains the goal, the key widgets/APIs, and the core logic, with a
 
 ---
 
-## 🎨 1) Drag & Drop Color Match ("Balls" Game)
+## 1) Drag & Drop Color Match ("Balls" Game)
 
 Match colored balls to their corresponding containers using drag and drop.
 
@@ -34,7 +34,7 @@ Match colored balls to their corresponding containers using drag and drop.
 
 ---
 
-## ✅ 2) Interactive Task List (Dismiss + Reorder)
+## 2) Interactive Task List (Dismiss + Reorder)
 
 Manage tasks with swipe-to-delete, undo, checkboxes, and drag-to-reorder.
 
@@ -55,7 +55,7 @@ Manage tasks with swipe-to-delete, undo, checkboxes, and drag-to-reorder.
 
 ---
 
-## ⏳ 3) Loading Dots Animation (Staggered)
+## 3) Loading Dots Animation (Staggered)
 
 Three dots animate in a loop with staggered scale and fade.
 
@@ -74,7 +74,7 @@ Three dots animate in a loop with staggered scale and fade.
 
 ---
 
-## 🧭 Navigation
+## Navigation
 
 Use the bottom navigation bar to switch between the three screens.  
 
@@ -83,7 +83,7 @@ Use the bottom navigation bar to switch between the three screens.
 
 ---
 
-## 📚 Resources
+## Resources
 
 - [Flutter Widget Catalog](https://docs.flutter.dev/ui/widgets/catalog)  
 - [Draggable / DragTarget](https://api.flutter.dev/flutter/widgets/Draggable-class.html)  
